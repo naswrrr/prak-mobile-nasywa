@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EgiluyApps</string>
+    <string name="judul">Verfikasi login</string>
+    <string name="judul_baru">Kode Berhasil Dikirim!</string>
+    <string name="anak_judul">Silahkan periksa nomor Anda</string>
 </resources>

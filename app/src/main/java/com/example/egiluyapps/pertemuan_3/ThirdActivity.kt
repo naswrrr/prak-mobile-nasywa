@@ -1,6 +1,7 @@
 package com.example.egiluyapps.pertemuan_3
 
 import android.R.attr.name
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -31,10 +32,13 @@ class ThirdActivity : AppCompatActivity() {
 
         binding.btnKirim.setOnClickListener {
             //Mengambil value dari inputNama dan menampilkan di Logcat
-            val nama = binding.inputNoTujuan.text
-            Log.e("Klik btnKirim","Tombol berhasil di tekan. Isi dari inputNama = $nama")
+            val nomor = binding.inputNoTujuan.text
+            Log.e("Klik btnKirim","Tombol berhasil di tekan. Isi dari inputNama = $nomor")
 
-            Toast.makeText(this, "Pesan berhasil terkirim ke: $nama" , Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Pesan berhasil terkirim ke: $nomor" , Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, ThirdResultActivity::class.java)
+            startActivity(intent)
         }
 
     }
