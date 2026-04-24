@@ -1,31 +1,27 @@
-package com.example.egiluyapps.pertemuan_3
+package com.example.egiluyapps.pertemuan_5
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem // 1. Tambahkan import ini
-import android.widget.Toast
+import android.view.MenuItem // Tambahkan import ini
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.egiluyapps.R
-import com.example.egiluyapps.databinding.ActivityThirdBinding
+import com.example.egiluyapps.databinding.ActivityFifthBinding
 
-class ThirdActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityThirdBinding
+class FifthActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityFifthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityThirdBinding.inflate(layoutInflater)
+        binding = ActivityFifthBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-            title = "Activity Third"
-            subtitle = "Kirim Pesan"
+            title = "Activity Fifth"
+            subtitle = "Ini adalah subtitle"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -35,25 +31,21 @@ class ThirdActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        binding.btnKirim.setOnClickListener {
-            val nomor = binding.inputNoTujuan.text
-            Log.e("Klik btnKirim","Tombol berhasil di tekan. Isi dari inputNama = $nomor")
-
-            Toast.makeText(this, "Pesan berhasil terkirim ke: $nomor" , Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(this, ThirdResultActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
+                // Tombol back di kiri atas diklik
                 onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }
