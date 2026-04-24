@@ -3,7 +3,7 @@ package com.example.egiluyapps.pertemuan_4
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem // 1. WAJIB TAMBAH IMPORT INI
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,12 +25,18 @@ class FourthActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             title = "Activity Fourth"
             subtitle = "Latihan Snackbar & Dialog"
+
+            // Tampilkan tombol kembali
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+
+            // Pakai icon panah custom milikmu
+            setHomeAsUpIndicator(R.drawable.arrow_back)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -68,7 +74,7 @@ class FourthActivity : AppCompatActivity() {
         Log.e("Data Intent","Nama: $name , Usia: $age, Asal: $from")
     }
 
-    // tambahkan ini agar tombol back di toolbar berfungsi
+    // Menangani klik tombol back di toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -77,6 +83,11 @@ class FourthActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 
     override fun onStart() {

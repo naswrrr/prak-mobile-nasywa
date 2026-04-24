@@ -3,7 +3,7 @@ package com.example.egiluyapps.pertemuan_3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem // 1. Tambahkan import ini
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.egiluyapps.R
 import com.example.egiluyapps.databinding.ActivityThirdBinding
+import com.example.egiluyapps.pertemuan_3.ThirdResultActivity // Pastikan import ini benar sesuai package-mu
 
 class ThirdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThirdBinding
@@ -22,12 +23,18 @@ class ThirdActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             title = "Activity Third"
             subtitle = "Kirim Pesan"
+
+            // Tampilkan tombol back
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+
+            // Pakai icon panah custom milikmu
+            setHomeAsUpIndicator(R.drawable.arrow_back)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -47,6 +54,7 @@ class ThirdActivity : AppCompatActivity() {
         }
     }
 
+    // Menangani klik tombol back di toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -55,5 +63,11 @@ class ThirdActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // Tambahan agar fungsi klik navigasi atas sinkron
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

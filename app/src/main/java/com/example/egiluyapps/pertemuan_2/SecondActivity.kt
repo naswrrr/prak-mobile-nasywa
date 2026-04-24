@@ -2,17 +2,17 @@ package com.example.egiluyapps.pertemuan_2
 
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem // Wajib ada untuk tombol back
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.egiluyapps.databinding.ActivitySecondBinding // Import binding otomatis
+import com.example.egiluyapps.R // Tambahkan import R ini agar drawable terbaca
+import com.example.egiluyapps.databinding.ActivitySecondBinding
 
 class SecondActivity : AppCompatActivity() {
 
-    // 1. Deklarasi binding
     private lateinit var binding: ActivitySecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,15 +20,20 @@ class SecondActivity : AppCompatActivity() {
 
         binding = ActivitySecondBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-
         setContentView(binding.root)
 
+        // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             title = "Activity Second"
             subtitle = "Pinterest Style"
+
+            // Tampilkan tombol back
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+
+            // Pasang ikon panah custom milikmu
+            setHomeAsUpIndicator(R.drawable.arrow_back)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -45,6 +50,7 @@ class SecondActivity : AppCompatActivity() {
         }
     }
 
+    // Menangani klik tombol back di toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -53,5 +59,11 @@ class SecondActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // Tambahan agar fungsi klik navigasi atas (tombol panah) berjalan mulus
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }
