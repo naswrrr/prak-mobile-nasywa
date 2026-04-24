@@ -6,10 +6,25 @@
         android:id="@+id/action_search"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="never" /> <item
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_theme"
+        android:title="Tema"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/sub_theme_light"
+                android:title="Mode Terang" />
+            <item
+                android:id="@+id/sub_theme_dark"
+                android:title="Mode Gelap" />
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/action_settings"
         android:title="Settings"
-        android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="never" />
 
 </menu>

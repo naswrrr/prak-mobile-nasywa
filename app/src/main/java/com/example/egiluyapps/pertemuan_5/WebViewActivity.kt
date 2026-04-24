@@ -2,6 +2,9 @@ package com.example.egiluyapps.pertemuan_5
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -22,43 +25,49 @@ class WebViewActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        // 2. Mengaktifkan Toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            title = "Web Merdeka"
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
+        // 2. Konfigurasi Toolbar (Gunakan ivBack karena kita pakai custom layout)
+        binding.ivBack.setOnClickListener {
+            handleBackAction()
         }
 
         // 3. Konfigurasi WebView
-        binding.webView.webViewClient = WebViewClient()
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.loadUrl("https://merdeka.com")
+        binding.webView.webViewClient = WebViewClient() // Agar link dibuka di dalam app, bukan browser luar
 
-        // 4. Agar Toolbar hide/show saat scroll web (Sesuai instruksi dosen)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (scrollY > oldScrollY) {
-                    binding.appBar.setExpanded(false, true) // sembunyikan
-                } else if (scrollY < oldScrollY) {
-                    binding.appBar.setExpanded(true, true) // tampilkan
+        // 4. Logika ProgressBar
+        binding.webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                binding.progressBar.progress = newProgress
+                if (newProgress == 100) {
+                    binding.progressBar.visibility = View.GONE
+                } else {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         }
 
-        // 5. Mengaktifkan tombol back pada toolbar (Panah kiri atas)
-        binding.toolbar.setNavigationOnClickListener {
-            handleBackAction()
+        // 5. Load URL
+        binding.webView.loadUrl("https://www.merdeka.com")
+
+        // 6. Agar Toolbar hide/show saat scroll web
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                if (scrollY > oldScrollY) {
+                    binding.appBar.setExpanded(false, true) // sembunyikan saat scroll ke bawah
+                } else if (scrollY < oldScrollY) {
+                    binding.appBar.setExpanded(true, true) // tampilkan saat scroll ke atas
+                }
+            }
         }
 
-        // 6. Menangani tombol back HP
+        // 7. Menangani tombol back fisik/gesture HP
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 handleBackAction()
             }
         })
 
-        // 7. Pengaturan Padding System Bars
+        // 8. Pengaturan Padding System Bars
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -66,12 +75,12 @@ class WebViewActivity : AppCompatActivity() {
         }
     }
 
-    // Fungsi bantuan agar logika Back seragam antara tombol HP & tombol Toolbar
+    // Fungsi agar logika Back seragam: cek dulu bisa back di web gak, kalau gak baru tutup activity
     private fun handleBackAction() {
         if (binding.webView.canGoBack()) {
-            binding.webView.goBack() // Kembali ke halaman sebelumnya
+            binding.webView.goBack()
         } else {
-            finish() // Keluar dari activity
+            finish()
         }
     }
 }
