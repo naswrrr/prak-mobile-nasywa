@@ -19,6 +19,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.107" />
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Logout"
+        android:backgroundTint="#D32F2F"
+        app:layout_constraintEnd_toEndOf="@+id/btnToFourth"
+        app:layout_constraintStart_toStartOf="@+id/btnToFourth"
+        app:layout_constraintTop_toBottomOf="@+id/btnToFourth" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
