@@ -1,37 +1,42 @@
-package com.example.egiluyapps
+package com.example.egiluyapps.Home
 
-import android.content.Context // Tambahkan ini
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.egiluyapps.databinding.ActivityMainBinding
+import com.example.egiluyapps.AuthActivity
 import com.example.egiluyapps.Home.pertemuan_4.FourthActivity
 import com.example.egiluyapps.Home.pertemuan_7.SeventhActivity
+import com.example.egiluyapps.R
+import com.example.egiluyapps.databinding.FragmentHomeBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class HomeFragment : Fragment() {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // Inisialisasi SharedPreferences agar bisa dipakai di dalam tombol logout
-        val sharedPref = getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = "Home"
         }
 
-        // Fitur Pertemuan 4 (Sudah ada di kode kamu)
+
+        val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
         binding.btnToFourth.setOnClickListener {
-            val intent = Intent(this, FourthActivity::class.java)
+            val intent = Intent(requireContext(), FourthActivity::class.java)
             intent.putExtra("nama", "Politeknik Caltex Riau")
             intent.putExtra("asal", "Rumbai")
             intent.putExtra("usia", 25)
@@ -39,13 +44,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnToSeventh.setOnClickListener {
-            val intent = Intent(this, SeventhActivity::class.java)
+            val intent = Intent(requireContext(), SeventhActivity::class.java)
             startActivity(intent)
         }
 
         // --- LOGIKA LOGOUT FIX (SESUAI PERINTAH) ---
         binding.btnLogout.setOnClickListener {
-            androidx.appcompat.app.AlertDialog.Builder(this)
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 .setTitle("Logout")
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya") { dialog, _ ->
@@ -58,11 +63,11 @@ class MainActivity : AppCompatActivity() {
                     dialog.dismiss()
 
                     // 3. Pindah kembali ke AuthActivity (Login)
-                    val intent = Intent(this, AuthActivity::class.java)
+                    val intent = Intent(requireContext(), AuthActivity::class.java)
                     startActivity(intent)
 
                     // 4. Selesaikan MainActivity supaya gak bisa di-"Back"
-                    finish()
+                    requireActivity().finish()
                 }
                 .setNegativeButton("Tidak") { dialog, _ ->
                     dialog.dismiss()

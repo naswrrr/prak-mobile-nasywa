@@ -1,4 +1,4 @@
-package com.example.egiluyapps.pertemuan_3
+package com.example.egiluyapps.Home.pertemuan_3
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.egiluyapps.R
 import com.example.egiluyapps.databinding.ActivityThirdBinding
-import com.example.egiluyapps.pertemuan_3.ThirdResultActivity // Pastikan import ini benar sesuai package-mu
 
 class ThirdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThirdBinding

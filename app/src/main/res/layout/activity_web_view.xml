@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    tools:context=".pertemuan_5.WebViewActivity">
+    tools:context=".Home.pertemuan_5.WebViewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -47,14 +47,14 @@
                         android:background="#D7F2FF">
 
                         <ImageView
-                            android:id="@+id/ivBack"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/arrow_back"
-                            app:tint="@color/blue_dark"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/ivBack"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/arrow_back"
+                        app:tint="@color/blue_dark"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvToolbarTitle"
