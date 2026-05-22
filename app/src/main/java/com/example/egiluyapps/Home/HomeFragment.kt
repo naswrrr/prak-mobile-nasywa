@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.egiluyapps.AuthActivity
 import com.example.egiluyapps.Home.pertemuan_4.FourthActivity
 import com.example.egiluyapps.Home.pertemuan_7.SeventhActivity
-import com.example.egiluyapps.R
+import com.example.egiluyapps.Home.pertemuan_9.NinthActivity
 import com.example.egiluyapps.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -21,20 +21,23 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Setup Toolbar di Fragment
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             title = "Home"
         }
 
-
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+
+        // --- NAVIGASI KE PERTEMUAN 4 ---
         binding.btnToFourth.setOnClickListener {
             val intent = Intent(requireContext(), FourthActivity::class.java)
             intent.putExtra("nama", "Politeknik Caltex Riau")
@@ -43,30 +46,36 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        // --- NAVIGASI KE PERTEMUAN 7 ---
         binding.btnToSeventh.setOnClickListener {
             val intent = Intent(requireContext(), SeventhActivity::class.java)
             startActivity(intent)
         }
 
-        // --- LOGIKA LOGOUT FIX (SESUAI PERINTAH) ---
+        // --- NAVIGASI KE PERTEMUAN 9 ---
+        binding.btnToNinth.setOnClickListener {
+            val intent = Intent(requireContext(), NinthActivity::class.java)
+            startActivity(intent)
+        }
+
+        // --- LOGIKA LOGOUT ---
         binding.btnLogout.setOnClickListener {
             androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 .setTitle("Logout")
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya") { dialog, _ ->
-                    // 1. Ambil sharedPref dan hapus SEMUA data (isLogin & username)
+                    // 1. Hapus data shared preferences
                     val editor = sharedPref.edit()
                     editor.clear()
                     editor.apply()
 
-                    // 2. Tutup dialog biar gak gantung
                     dialog.dismiss()
 
-                    // 3. Pindah kembali ke AuthActivity (Login)
+                    // 2. Pindah ke AuthActivity
                     val intent = Intent(requireContext(), AuthActivity::class.java)
                     startActivity(intent)
 
-                    // 4. Selesaikan MainActivity supaya gak bisa di-"Back"
+                    // 3. Selesaikan Activity utama
                     requireActivity().finish()
                 }
                 .setNegativeButton("Tidak") { dialog, _ ->
@@ -74,5 +83,10 @@ class HomeFragment : Fragment() {
                 }
                 .show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
