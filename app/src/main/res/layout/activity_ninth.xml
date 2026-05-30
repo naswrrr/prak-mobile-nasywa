@@ -29,8 +29,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_edit">
+        app:startIconDrawable="@drawable/ic_edit_fixed"
+        app:startIconTint="@null"
+        app:endIconMode="none">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"

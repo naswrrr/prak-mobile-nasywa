@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.egiluyapps.AuthActivity
+import com.example.egiluyapps.Home.pertemuan_10.TenthActivity
 import com.example.egiluyapps.Home.pertemuan_4.FourthActivity
 import com.example.egiluyapps.Home.pertemuan_7.SeventhActivity
 import com.example.egiluyapps.Home.pertemuan_9.NinthActivity
@@ -55,6 +56,12 @@ class HomeFragment : Fragment() {
         // --- NAVIGASI KE PERTEMUAN 9 ---
         binding.btnToNinth.setOnClickListener {
             val intent = Intent(requireContext(), NinthActivity::class.java)
+            startActivity(intent)
+        }
+
+        // --- NAVIGASI KE PERTEMUAN 10 ---
+        binding.btnToTenth.setOnClickListener {
+            val intent = Intent(requireContext(), TenthActivity::class.java)
             startActivity(intent)
         }
 
