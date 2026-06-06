@@ -12,10 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.egiluyapps.AuthActivity
-//import com.example.egiluyapps.Home.pertemuan_10.TenthActivity
+import com.example.egiluyapps.Home.pertemuan_2.SecondActivity // Import baru
+import com.example.egiluyapps.Home.pertemuan_3.ThirdActivity  // Import baru
 import com.example.egiluyapps.Home.pertemuan_4.FourthActivity
+import com.example.egiluyapps.Home.pertemuan_5.FifthActivity  // Import baru
 import com.example.egiluyapps.Home.pertemuan_7.SeventhActivity
 import com.example.egiluyapps.Home.pertemuan_9.NinthActivity
+import com.example.egiluyapps.Home.pertemuan_10.TenthActivity
 import com.example.egiluyapps.Home.photo.PhotoAdapter
 import com.example.egiluyapps.data.api.CatFactApiClient
 import com.example.egiluyapps.data.api.PhotoApiClient
@@ -41,12 +44,21 @@ class HomeFragment : Fragment() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             title = "Home"
-
-
         }
 
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
 
+        // --- NAVIGASI KE PERTEMUAN 2 ---
+        binding.btnToSecond.setOnClickListener {
+            val intent = Intent(requireContext(), SecondActivity::class.java)
+            startActivity(intent)
+        }
+
+        // --- NAVIGASI KE PERTEMUAN 3 ---
+        binding.btnToThird.setOnClickListener {
+            val intent = Intent(requireContext(), ThirdActivity::class.java)
+            startActivity(intent)
+        }
 
         // --- NAVIGASI KE PERTEMUAN 4 ---
         binding.btnToFourth.setOnClickListener {
@@ -54,6 +66,12 @@ class HomeFragment : Fragment() {
             intent.putExtra("nama", "Politeknik Caltex Riau")
             intent.putExtra("asal", "Rumbai")
             intent.putExtra("usia", 25)
+            startActivity(intent)
+        }
+
+        // --- NAVIGASI KE PERTEMUAN 5 ---
+        binding.btnToFifth.setOnClickListener {
+            val intent = Intent(requireContext(), FifthActivity::class.java)
             startActivity(intent)
         }
 
@@ -69,11 +87,11 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-//        // --- NAVIGASI KE PERTEMUAN 10 ---
-//        binding.btnToTenth.setOnClickListener {
-//            val intent = Intent(requireContext(), TenthActivity::class.java)
-//            startActivity(intent)
-//        }
+        // --- NAVIGASI KE PERTEMUAN 10 ---
+        binding.btnToTenth.setOnClickListener {
+            val intent = Intent(requireContext(), TenthActivity::class.java)
+            startActivity(intent)
+        }
 
         // --- LOGIKA LOGOUT ---
         binding.btnLogout.setOnClickListener {
@@ -81,18 +99,13 @@ class HomeFragment : Fragment() {
                 .setTitle("Logout")
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya") { dialog, _ ->
-                    // 1. Hapus data shared preferences
                     val editor = sharedPref.edit()
                     editor.clear()
                     editor.apply()
-
                     dialog.dismiss()
 
-                    // 2. Pindah ke AuthActivity
                     val intent = Intent(requireContext(), AuthActivity::class.java)
                     startActivity(intent)
-
-                    // 3. Selesaikan Activity utama
                     requireActivity().finish()
                 }
                 .setNegativeButton("Tidak") { dialog, _ ->
@@ -125,16 +138,7 @@ class HomeFragment : Fragment() {
                 val photos = PhotoApiClient.apiService.getPhotos()
                 val adapter = PhotoAdapter(photos)
                 binding.rvGallery.adapter = adapter
-
-                /** List Tampil Vertical*/
                 binding.rvGallery.layoutManager = LinearLayoutManager(requireContext())
-
-                /** List Tampil Horizontal */
-                //binding.rvGallery.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-                /** List Tampil Grid */
-                //binding.rvGallery.layoutManager = GridLayoutManager(requireContext(),2)
-
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Gagal memuat gambar", Toast.LENGTH_SHORT).show()
             }

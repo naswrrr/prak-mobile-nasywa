@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EgiluyApps">
         <activity
-            android:name=".Message.tutorial.TutorialMessageActivity"
+            android:name=".Home.pertemuan_10.TenthActivity"
             android:exported="false" />
         <activity
-            android:name=".Home.pertemuan_10.TenthActivity"
+            android:name=".Message.tutorial.TutorialMessageActivity"
             android:exported="false" />
         <activity
             android:name=".Home.pertemuan_9.NinthActivity"
